@@ -23,4 +23,69 @@ The app have at its core, as I have said earlier, a module system. Each module h
 
 There will be 2 versions of this app made. One where it relies on NPM, and one complete version kept safe, in case a package dissapears off of NPM or something happens to MFA.
 
-## In Development
+## Module System
+
+Modules will act as individual app features and need to have the following:
+1. HTTP Server
+2. Standardised folder structure
+3. Use API calls instead of creating functions
+4. Use ESLint
+5. Have Strict Type Checking
+6. Have it's own NPM Packages and TSConfig 
+7. Have it's own github repo/branch
+
+### File Structure: 
+
+```
+ui 
+node_modules
+src -----------------------> http.ts
+out (output js files)ㅤㅤ |-> app.ts 
+ㅤㅤㅤㅤㅤㅤㅤㅤ     ㅤㅤ  ㅤ|-> other files and folders
+
+module.js
+module.ts
+.eslintrc
+package.json
+package-lock.json
+.md/.rst or any docs file
+Stefan-Module.json
+```
+
+### Stefan-Module.json:
+```json
+{
+    "Name": "...", // Module Name
+    "Version": "1.0" || "1.0.0",
+    "Description": "...",
+    "Port": "..."
+}
+```
+
+### Allowed Ports:
+
+1. 19000 to 20000 range (Least Important Modules)
+2. 3568 to 3700 range (Regular Modules)
+3. 491 to 499 range (Money-Maker Modules)
+
+
+## API
+
+The API will contain many useful calls to easily develop modules in a standard way.
+
+There are 3 main API offered by "Stefan API":
+
+1. Video API
+    - It will feature calls to process videos with ffmpeg, such as:
+    ["concatenation", "trimming", "overlay", "remove audio", "add audio", "upscale" ]
+
+2. Audio API 
+    - It will contain calls to handle the following operations:
+    ["concatenating", "trimming"]
+
+3. Subtitles API
+    - It will handle calls for the following operations:
+    ["Audio -> Subtitles", "SSML Parser"]
+
+
+##
