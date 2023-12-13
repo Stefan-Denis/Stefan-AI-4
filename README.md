@@ -1,5 +1,7 @@
 # Stefan AI 4
 
+## Before Continuing
+
 Whilst Stefan AI 3 was decent, it was too hard to create output videos that got tons of success. 
 
 I have come to the conclusion that there must be some manual work done in each video. The AI could not get a good hook for the video, it lacked understanding of human emotions and how dopamine worked. It had a washed-up version of how everything worked, from a leftist persepctive.
@@ -8,20 +10,21 @@ This is why Stefan AI 4 will use a "modules system" so that functionality can ex
 
 The app have at its core, as I have said earlier, a module system. Each module has its own folder directory in which it works in, and will be managed by the system.
 
-## Dependencies
-
-* C++ desktop development package from Visual Studio 2022
-* MFA
-* Python
-* Miniconda
-* FFMpeg
-* NodeJS
-
 (These tools will come included with the app, and will have installation scripts)
+
+## Tech Stack and Languages
+
+
+#### The following languages are used:
+
+![Static Typescript Badge](https://img.shields.io/badge/|-Typescript-blue?logo=Typescript) 
+![Static Powershell Badge](https://img.shields.io/badge/|-Powershell-blue?logo=Powershell)
 
 ## Version Control and packages.
 
 There will be 2 versions of this app made. One where it relies on NPM, and one complete version kept safe, in case a package dissapears off of NPM or something happens to MFA.
+
+Version control will be taken seriously.
 
 ## Module System
 
@@ -107,3 +110,12 @@ export async function main() {
 }
 ```
 
+# Unimportant information for the consumer
+## Dependencies
+
+* C++ desktop development package from Visual Studio 2022
+* MFA
+* Python
+* Miniconda
+* FFMpeg
+* NodeJS
