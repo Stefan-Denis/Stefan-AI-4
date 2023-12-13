@@ -99,7 +99,7 @@ There are 3 main API offered by "Stefan API":
 
 * For the app to run the package, it must be inside a main function like this:
 ```js
-export function main() {
+export async function main() {
     /**
      * All code must be or link to this function
      * The package manager runs only the main function
