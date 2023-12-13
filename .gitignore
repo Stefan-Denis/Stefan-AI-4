@@ -1,2 +1,5 @@
 install
-src
+src/app/node_modules
+src/app/js
+src/app/modules
+src/api
