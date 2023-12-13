@@ -88,4 +88,22 @@ There are 3 main API offered by "Stefan API":
     ["Audio -> Subtitles", "SSML Parser"]
 
 
-##
+## Create Module
+
+* Name: Respect the following filename format for module js files:
+    ###-module.js <br/>
+     |<br/>
+     |--> Can be replaced with anything
+
+* Only 1 module file
+
+* For the app to run the package, it must be inside a main function like this:
+```js
+export function main() {
+    /**
+     * All code must be or link to this function
+     * The package manager runs only the main function
+     */
+}
+```
+
