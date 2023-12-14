@@ -46,7 +46,7 @@ class Main {
     /**
      * Display Main Menu Logo
      */
-    static async displayLogo() {
+    static displayLogo() {
         Text.breakLine()
 
         const spacing = ' '.repeat(11)
@@ -57,9 +57,14 @@ class Main {
     /**
      * Retrieve all potential modules
      */
-    static async retrieveModules() {
-        const modules: Array<string> = fs.readdirSync(path.join(__dirname, '../modules'))
-        return modules
+    static retrieveModules() {
+        try {
+            const modules: Array<string> = fs.readdirSync(path.join(__dirname, '../modules'))
+            return modules
+        } catch (err) {
+            console.log(chalk.bgRed('Modules Folder Not Found!'))
+            process.exit(1)
+        }
     }
 
     /**
@@ -67,15 +72,20 @@ class Main {
      * @param modules 
      * @param validatedModules 
      */
-    static async validateModules(modules: Array<string>, validatedModules: Array<string>) {
+    static validateModules(modules: Array<string>, validatedModules: Array<string>) {
         modules.forEach((moduleFolder: string) => {
-            const moduleFolderFiles = fs.readdirSync(path.join(__dirname, `../modules/${moduleFolder}`))
+            try {
+                const moduleFolderFiles = fs.readdirSync(path.join(__dirname, `../modules/${moduleFolder}`))
 
-            moduleFolderFiles.forEach((moduleFolderFile: string) => {
-                if (moduleFolderFile === 'stefan-module.json') {
-                    validatedModules.push(moduleFolder)
-                }
-            })
+                moduleFolderFiles.forEach((moduleFolderFile: string) => {
+                    if (moduleFolderFile === 'stefan-module.json') {
+                        validatedModules.push(moduleFolder)
+                    }
+                })
+            } catch (err) {
+                console.log(chalk.bgRed('Module Folder Not Found!'))
+                process.exit(1)
+            }
         })
     }
 
@@ -87,10 +97,23 @@ class Main {
     static async createModuleDataMatrix(validatedModules: Array<string>, moduleData: Array<Array<string>>) {
         validatedModules.forEach((moduleFolder: string) => {
             const modulePath = path.join(__dirname, `../modules/${moduleFolder}`)
-            const data: StefanModuleData = fs.readJSONSync(path.join(modulePath, 'stefan-module.json'))
 
-            moduleData[0].push(data.Name)
-            moduleData[1].push(modulePath)
+            try { // * Check if the file exists, if not, stop the app
+                fs.existsSync(path.join(modulePath, 'stefan-module.json'))
+            } catch (err) {
+                Text.clearHost()
+                console.log(chalk.bgRed('stefan-module.json file not found!'))
+                process.exit(1)
+            }
+
+            try { // * Check if the file is valid, if it is, then read and add the data
+                const data: StefanModuleData = fs.readJSONSync(path.join(modulePath, 'stefan-module.json'))
+                moduleData[0].push(data.Name)
+                moduleData[1].push(modulePath)
+            } catch (err) {
+                console.log(chalk.bgRed('stefan-module.json file is invalid!'))
+                process.exit(1)
+            }
         })
     }
 
@@ -103,12 +126,12 @@ class Main {
         /**
          * * Display the logo
          */
-        await Main.displayLogo()
+        Main.displayLogo()
 
         /**
          * * Retrieve all folders inside the modules folder
          */
-        const modules: Array<string> = await Main.retrieveModules()
+        const modules: Array<string> = Main.retrieveModules()
 
         /**
          * * Variable that contains the modules that are validated
@@ -119,7 +142,7 @@ class Main {
         /**
          * * Find the folders with the stefan-module.json file
          */
-        await Main.validateModules(modules, validatedModules)
+        Main.validateModules(modules, validatedModules)
 
         /**
          * * Module Data Matrix which holds in slot 0 the filepath and in slot 1 the name
@@ -180,6 +203,14 @@ class LoadModule {
 
         // * Find the module file to execute, return all files that end with '-module.js'
         const moduleIndex = modules[0].indexOf(module); const modulePath = modules[1][moduleIndex]
+
+        try {
+            fs.existsSync(modulePath)
+        } catch (err) {
+            console.log(chalk.red('Module Folder Not Found!'))
+            process.exit(0)
+        }
+
         const files = fs.readdirSync(modulePath).filter((file: string) => file.endsWith('-module.js'))
 
         if (files.length === 0) { // * If no module files are found, exit the program
@@ -190,18 +221,26 @@ class LoadModule {
             console.log(chalk.red('Please make sure that only one module file is present!'))
             process.exit(0)
         } else { // * If only one module file is found, load it
-
-            // * Create the path to the module file
-            const moduleFile = files[0]
-            const moduleFilePath = path.join(modulePath, moduleFile)
-
-            // * Construct path to module file using the `file://` style and import it
-            const moduleURL = pathToFileURL(moduleFilePath)
-            const module = await import(moduleURL.href)
-
-            // * Execute the module
-            await module.main()
+            await LoadModule.executeModule(files, modulePath)
         }
+    }
+
+    /**
+     * Execute the Selected Module
+     * @param files 
+     * @param modulePath 
+     */
+    static async executeModule(files: Array<string>, modulePath: string) {
+        // * Create the path to the module file
+        const moduleFile = files[0]
+        const moduleFilePath = path.join(modulePath, moduleFile)
+
+        // * Construct path to module file using the `file://` style and import it
+        const moduleURL = pathToFileURL(moduleFilePath)
+        const module = await import(moduleURL.href)
+
+        // * Execute the module
+        await module.main()
     }
 }
 
@@ -225,12 +264,12 @@ class Loader {
 }
 
 class Text {
-    static async breakLine() {
-        Text.breakLine()
+    static breakLine() {
+        console.log('\n')
     }
 
-    static async clearHost() {
-        Text.clearHost()
+    static clearHost() {
+        console.clear()
     }
 }
 
