@@ -2,4 +2,5 @@ install
 src/app/node_modules
 src/app/js
 src/app/modules
-src/api/out
+src/api/out/stefanAPI.js
+src/api/out/*/**
