@@ -1,6 +1,6 @@
 export interface IStefanAPI {
     Video: {
-        getVideoInfo: () => void
+        concat: (inputFiles: readonly string[], outputFile: string, transition: { name: string, duration: number }) => void
     }
     Audio: {
         getAudioInfo: () => void
