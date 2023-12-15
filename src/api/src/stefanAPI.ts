@@ -22,6 +22,7 @@ import asyncWait from './functions/asyncWait.js'
  */
 import concatenate from './video/concat.js'
 import trim from './video/trim.js'
+import removeAudio from './video/removeAudio.js'
 
 /**
  * ? Stefan API - Audio
@@ -39,6 +40,10 @@ const StefanAPI: IStefanAPI = {
 
         async trim(input: string, output: string, start: number, end: number) {
             return await trim(input, output, start, end)
+        },
+
+        async removeAudio(input: string, output: string) {
+            return await removeAudio(input, output)
         }
     },
 
