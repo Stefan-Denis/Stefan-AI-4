@@ -12,16 +12,17 @@
  */
 import concat from 'ffmpeg-concat'
 
-export default async function concatenate(
-    input: readonly string[],
-    output: string,
-    transition: {
-        name: string,
-        duration: number
-    }) {
-    await concat({
-        videos: input,
-        output: output,
-        transition: transition
-    })
+export default async function concatenate(input: readonly string[], output: string, transition: { name: string, duration: number }) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await concat({
+                videos: input,
+                output: output,
+                transition: transition
+            })
+            resolve(true)
+        } catch {
+            reject(false)
+        }
+    }) as Promise<boolean>
 }
