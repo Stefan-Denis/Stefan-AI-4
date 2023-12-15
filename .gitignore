@@ -4,3 +4,4 @@ src/app/js
 src/app/modules
 src/api/out/stefanAPI.js
 src/api/out/*/**
+src/api/node_modules
