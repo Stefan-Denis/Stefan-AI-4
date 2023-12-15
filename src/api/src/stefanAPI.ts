@@ -15,12 +15,12 @@ import { IStefanAPI } from '../out/stefanAPI'
 /**
  * ? Stefan API - Functions
  */
-import asyncWait from './functions/asyncWait'
+import asyncWait from './functions/asyncWait.js'
 
 /**
  * ? Stefan API - Video
  */
-import concatenate from './video/concat'
+import concatenate from './video/concat.js'
 
 /**
  * ? Stefan API - Audio
