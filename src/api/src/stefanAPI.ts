@@ -20,6 +20,7 @@ import asyncWait from './functions/asyncWait'
 /**
  * ? Stefan API - Video
  */
+import concatenate from './video/concat'
 
 /**
  * ? Stefan API - Audio
@@ -31,8 +32,8 @@ import asyncWait from './functions/asyncWait'
 
 const StefanAPI: IStefanAPI = {
     Video: {
-        getVideoInfo() {
-
+        async concat(inputFiles: readonly string[], outputFile: string, transition: { name: string, duration: number }) {
+            await concatenate(inputFiles, outputFile, transition)
         }
     },
 
