@@ -31,6 +31,20 @@ export interface IStefanAPI {
          * ```
          */
         trim: (input: string, output: string, start: number, end: number) => Promise<boolean>
+
+        /**
+         * @param input Input file path, constructed with path.join and __dirname.
+         * @param output Output file path, constructed with path.join and __dirname.
+         * 
+         * @example
+         * ```ts
+         * const video1 = path.join(__dirname, '1017(15).mp4')
+         * const outputPath = path.join(__dirname, '1017.mp4')
+         * 
+         * await StefanAPI.Video.removeAudio(video1, outputPath)
+         * ```
+         */
+        removeAudio: (input: string, output: string) => Promise<boolean>
     }
     Audio: {
         getAudioInfo: () => void
