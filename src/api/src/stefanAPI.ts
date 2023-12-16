@@ -21,7 +21,7 @@ import asyncWait from './functions/asyncWait.js'
  * ? Stefan API - Video
  */
 import concatenate from './video/concat.js'
-import trim from './video/trim.js'
+import trimVideo from './video/trim.js'
 import removeAudio from './video/removeAudio.js'
 import addAudio from './video/addAudio.js'
 
@@ -29,6 +29,7 @@ import addAudio from './video/addAudio.js'
  * ? Stefan API - Audio
  */
 import concat from './audio/concat.js'
+import trim from './audio/trim.js'
 
 /**
  * ? Stefan API - Subtitles
@@ -41,7 +42,7 @@ const StefanAPI: IStefanAPI = {
         },
 
         async trim(input: string, output: string, start: number, end: number) {
-            return await trim(input, output, start, end)
+            return await trimVideo(input, output, start, end)
         },
 
         async removeAudio(input: string, output: string) {
@@ -56,6 +57,10 @@ const StefanAPI: IStefanAPI = {
     Audio: {
         async concat(inputAudios: string[], outputAudio: string) {
             return await concat(inputAudios, outputAudio)
+        },
+
+        async trim(input: string, output: string, start: number, end: number) {
+            return await trim(input, output, start, end)
         }
     },
 
