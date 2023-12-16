@@ -94,10 +94,40 @@ export interface IStefanAPI {
         trim: (input: string, output: string, start: number, end: number) => Promise<boolean>
     }
     Subtitles: {
-        audioToSubtitles: (audioLocation: string, subtitlesLocation: string, output: string) => Promise<boolean>
-        SSMLParser: (input: string, output: string) => Promise<boolean>
+        /**
+         * Make sure to have your subtitle file prepared beforehand with all the settings you want, this method will only append the subtitles to the file.
+         * Audio Gets automatically converted to .wav
+         * @param inputAudio 
+         * @param transcriptPath 
+         * @param outputSubtitlesPath 
+         * @example
+         * ```ts
+         * const audio = path.join(__dirname, 'audio.mp3')
+         * const transcript = path.join(__dirname, 'transcript.lab')
+         * const subtitles = path.join(__dirname, 'subtitles.ass')
+         * 
+         * ```
+         */
+        audioToSubtitles: (inputAudio: string, transcriptPath: string, outputSubtitlesPath: string) => Promise<boolean>
+
+        /**
+         * @param input 
+         * @param output 
+         * @example
+         * ```ts
+         * const input = 'Hello World'
+         * const output = await StefanAPI.Subtitles.SSMLParser(input)
+         * 
+         * console.log(output) // <p><s>Hello World</s></p> 
+         * ```
+         */
+        SSMLParser: (input: string, output: string) => Promise<string>
     }
     Functions: {
+        /**
+         * @param ms 
+         * @returns 
+         */
         asyncWait: (ms: number) => Promise<void>
     }
 }
