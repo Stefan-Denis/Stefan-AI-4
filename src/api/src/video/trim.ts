@@ -12,7 +12,7 @@
  */
 import ffmpeg from 'fluent-ffmpeg'
 
-export default function trim(input: string, output: string, start: number, end: number): Promise<boolean> {
+export default function trimVideo(input: string, output: string, start: number, end: number): Promise<boolean> {
     return new Promise((resolve, reject) => {
         ffmpeg(input)
             .setStartTime(start)
