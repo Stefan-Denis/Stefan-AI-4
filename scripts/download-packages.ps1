@@ -10,6 +10,9 @@ Set-Location $packageLoaderSrcLocation
 
 
 # TODO: Add API package download
+$packageLoaderAPILocation = Join-Path $PSScriptRoot "..\src\api"
+Set-Location $packageLoaderAPILocation
+& npm install
 
 # Exit
 if ($env:TERM_PROGRAM -eq "vscode") {
