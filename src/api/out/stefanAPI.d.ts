@@ -1,3 +1,20 @@
+/**
+ * @typedef {Object} IStefanAPI
+ * @property {Object} Video
+ * @property {Function} Video.concat
+ * @property {Function} Video.trim
+ * @property {Function} Video.removeAudio
+ * @property {Function} Video.addAudio
+ * @property {Object} Audio
+ * @property {Function} Audio.concat
+ * @property {Function} Audio.trim
+ * @property {Object} Subtitles
+ * @property {Function} Subtitles.audioToSubtitles
+ * @property {Function} Subtitles.SSMLParser
+ * @property {Function} Subtitles.AddASSA
+ * @property {Object} Functions
+ * @property {Function} Functions.asyncWait
+ */
 export interface IStefanAPI {
     Video: {
         /**
@@ -45,12 +62,31 @@ export interface IStefanAPI {
          * ```
          */
         removeAudio: (input: string, output: string) => Promise<boolean>
+
+        /**
+         * @param input Input file path, constructed with path.join and __dirname.
+         * @param audio Audio file path, constructed with path.join and __dirname.
+         * @param output Output file path, constructed with path.join and __dirname.
+         * 
+         * @example
+         * ```ts
+         * const video1 = path.join(__dirname, '1017(15).mp4')
+         * const audio = path.join(__dirname, 'audio.mp3')
+         * const outputPath = path.join(__dirname, '1017.mp4')
+         * 
+         * await StefanAPI.Video.addAudio(video1, audio, outputPath)
+         * ```
+         */
+        addAudio: (input: string, audio: string, output: string) => Promise<boolean>
     }
     Audio: {
-        getAudioInfo: () => void
+        concat: (input: string[], output: string) => Promise<boolean>
+        trim: (input: string, output: string, start: number, end: number) => Promise<boolean>
     }
     Subtitles: {
-        getSubtitlesInfo: () => void
+        audioToSubtitles: (audioLocation: string, subtitlesLocation: string, output: string) => Promise<boolean>
+        SSMLParser: (input: string, output: string) => Promise<boolean>
+        AddASSA: (input: string, output: string) => Promise<boolean>
     }
     Functions: {
         asyncWait: (ms: number) => Promise<void>
