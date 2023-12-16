@@ -34,6 +34,7 @@ import trim from './audio/trim.js'
 /**
  * ? Stefan API - Subtitles
  */
+import audioToSubtitles from './subtitle/subtitle.js'
 
 const StefanAPI: IStefanAPI = {
     Video: {
@@ -65,7 +66,13 @@ const StefanAPI: IStefanAPI = {
     },
 
     Subtitles: {
+        async audioToSubtitles(inputAudio: string, transcriptPath: string, outputSubtitlesPath: string) {
+            return await audioToSubtitles(inputAudio, transcriptPath, outputSubtitlesPath)
+        },
 
+        async SSMLParser(input: string) {
+            return `<p><s>${input}</s></p>`
+        }
     },
 
     Functions: {
