@@ -67,11 +67,16 @@ export default function audioToSubtitles(inputAudio: string, transcriptPath: str
 
         // Check if the process was successful
         if (process.status !== 0) {
+            console.log('Stefan API: MFA failed to run.')
             reject(false)
         }
 
-        // Read the output file
+        // Output File
         let outputFile = path.join(corpusDirectory, 'transcript.TextGrid')
+
+        if (!fs.existsSync(outputFile)) {
+            console.log('Stefan API: transcript.TextGrid file missing')
+        }
 
         // Filter the output file
         const timings: Array<Timing> = await parseTextGrid(outputFile) as Array<Timing>

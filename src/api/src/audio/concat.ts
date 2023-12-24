@@ -14,14 +14,22 @@ import ffmpeg from 'fluent-ffmpeg'
 
 export default function concat(inputAudios: string[], outputAudio: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
-        ffmpeg()
-            .input('concat:' + inputAudios.join('|'))
+        const command = ffmpeg()
+
+        // Add all input audio files
+        inputAudios.forEach((audioPath) => {
+            command.input(audioPath)
+        })
+
+        command
+            .outputOptions('-filter_complex', 'concat=n=' + inputAudios.length + ':v=0:a=1')
+            .outputOptions('-b:a 320k') // Highest bitrate for audio
             .output(outputAudio)
             .on('end', () => {
                 resolve(true)
             })
-            .on('error', () => {
-                reject(false)
+            .on('error', (error) => {
+                reject(error)
             })
             .run()
     })
