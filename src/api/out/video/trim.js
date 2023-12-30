@@ -3,16 +3,14 @@
  * @version 4.0.0
  * @since 15.12.2023
  * @description Source File that contains the function to trim a video.
- * 
+ *
  * @project Stefan AI 4
  */
-
 /**
  * Imports
  */
-import ffmpeg from 'fluent-ffmpeg'
-
-export default function trimVideo(input: string, output: string, start: number, end: number): Promise<boolean> {
+import ffmpeg from 'fluent-ffmpeg';
+export default function trimVideo(input, output, start, end) {
     return new Promise((resolve, reject) => {
         ffmpeg(input)
             .setStartTime(start)
@@ -20,11 +18,11 @@ export default function trimVideo(input: string, output: string, start: number, 
             .output(output)
             .videoCodec('copy')
             .on('end', () => {
-                resolve(true)
-            })
+            resolve(true);
+        })
             .on('error', () => {
-                reject(false)
-            })
-            .run()
-    })
+            reject(false);
+        })
+            .run();
+    });
 }
